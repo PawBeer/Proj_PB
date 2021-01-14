@@ -312,9 +312,11 @@ namespace Proj_PB
                         break;
                     }
             };
-            this.Hide();
-            Form1 a1 = new Form1(UserName);
-            a1.ShowDialog();
+
+            
+
         }
+
+
     }
 }
