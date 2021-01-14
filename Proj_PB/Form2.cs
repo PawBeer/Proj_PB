@@ -35,9 +35,8 @@ namespace Proj_PB
                 SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[Table] ", conn1);
                 adapter1.Fill(dt1);
                 dataGridView1.DataSource = dt1;
-            
-
         }
+
 
         private string UserName { get; set; }
 
