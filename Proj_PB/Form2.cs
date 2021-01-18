@@ -25,7 +25,7 @@ namespace Proj_PB
         public bool AddABS = false;
         public bool AddKlimatyzacja = false;
         public bool AddWspomaganie = false;
-        public string AddZdjecie = "";   
+        public string AddZdjecie = @"C:\temp\default.jpg";   
 
         public Form2()
         {
@@ -93,17 +93,14 @@ namespace Proj_PB
                     }
             };
 
-            {
-                // TODO: This line of code loads data into the 'carsDataSet.Table' table. You can move, or remove it, as needed.
-                // this.tableTableAdapter.Fill(this.carsDataSet.Table);
-
-                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt1 = new DataTable();
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[" + tab + "] ", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns["Id"].Visible = false;
-            }
+            
+            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            DataTable dt1 = new DataTable();
+            SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[" + tab + "] ", conn1);
+            adapter1.Fill(dt1);
+            dataGridView1.DataSource = dt1;
+            dataGridView1.Columns["Id"].Visible = false;
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -135,8 +132,7 @@ namespace Proj_PB
         {
             if (AddMarka.Equals(""))
             {
-                MessageBox.Show("Prosze o uzupełnienie danych w polach marka");
-                
+                MessageBox.Show("Prosze o uzupełnienie danych w polach marka");       
             }
             else
             {
@@ -149,14 +145,12 @@ namespace Proj_PB
                     if(AddSilnik.Equals(""))
                     {
                         MessageBox.Show("Prosze o uzupełnienie danych w polach silnik");
-
                     }
                     else
                     {
                         if(AddKolor.Equals(""))
                         {
                             MessageBox.Show("Prosze o uzupełnienie danych w polach kolor");
-
                         }
                         else
                         {
@@ -187,12 +181,9 @@ namespace Proj_PB
                             checkBox4.Checked = false;
                             AddZdjecie = "";
                         }
-                    }
-                   
+                    }  
                 }
-
             }
-            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -268,12 +259,12 @@ namespace Proj_PB
         {
             try
             {
-                openFileDialog1.InitialDirectory = @"C:\temp\";
+                openFileDialog1.InitialDirectory = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, "photos");  
                 openFileDialog1.FileName = "";
                 openFileDialog1.Filter = "Jpg files (*.jpg) | *.jpg";
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    AddZdjecie = openFileDialog1.FileName;
+                    AddZdjecie = openFileDialog1.SafeFileName;
                     AddZdjecie = AddZdjecie.Replace(@"\\", @"\");
                 }
             }

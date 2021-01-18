@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace Proj_PB
 {
@@ -142,21 +143,21 @@ namespace Proj_PB
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt = new DataTable();
-                string wybModel = comboBox1.GetItemText(comboBox1.SelectedValue);
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT silnik FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn);
-                adapter.Fill(dt);
-                comboBox2.DataSource = dt;
-                comboBox2.DisplayMember = "silnik";
+            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            DataTable dt = new DataTable();
+            string wybModel = comboBox1.GetItemText(comboBox1.SelectedValue);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT silnik FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn);
+            adapter.Fill(dt);
+            comboBox2.DataSource = dt;
+            comboBox2.DisplayMember = "silnik";
 
-                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt1 = new DataTable();
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            DataTable dt1 = new DataTable();
+            SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn1);
+            adapter1.Fill(dt1);
+            dataGridView1.DataSource = dt1;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[9].Visible = false;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -272,7 +273,13 @@ namespace Proj_PB
             conn.Open();
             SqlCommand cm = new SqlCommand("SELECT zdjecie FROM [dbo].[" + tab + "] where Id='" + id + "'", conn);
             string img = cm.ExecuteScalar().ToString();
-            pictureBox1.Image = Image.FromFile(img);
+
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+            string ImagePath = Path.Combine(projectDirectory, "photos", img);
+
+            pictureBox1.Image = Image.FromFile(ImagePath);
+            
             conn.Close();
         }
 
@@ -280,7 +287,7 @@ namespace Proj_PB
         {
          tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
            
-            switch(tabKom)
+            switch(tabKom) 
             {
                 case "0":
                     {
