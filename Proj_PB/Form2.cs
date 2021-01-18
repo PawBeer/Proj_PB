@@ -25,7 +25,7 @@ namespace Proj_PB
         public bool AddABS = false;
         public bool AddKlimatyzacja = false;
         public bool AddWspomaganie = false;
-        public string AddZdjecie = @"C:\temp\default.jpg";   
+        public string AddZdjecie = "default.jpg";   
 
         public Form2()
         {
@@ -138,19 +138,19 @@ namespace Proj_PB
             {
                 if (AddModel.Equals(""))
                 {
-                    MessageBox.Show("Prosze o uzupełnienie danych w polach model");
+                    MessageBox.Show("Prosze o uzupełnienie danych w polu model");
                 }
                 else
                 {
                     if(AddSilnik.Equals(""))
                     {
-                        MessageBox.Show("Prosze o uzupełnienie danych w polach silnik");
+                        MessageBox.Show("Prosze o uzupełnienie danych w polu silnik");
                     }
                     else
                     {
                         if(AddKolor.Equals(""))
                         {
-                            MessageBox.Show("Prosze o uzupełnienie danych w polach kolor");
+                            MessageBox.Show("Prosze o uzupełnienie danych w polu kolor");
                         }
                         else
                         {

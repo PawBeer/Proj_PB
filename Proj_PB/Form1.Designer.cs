@@ -209,6 +209,7 @@ namespace Proj_PB
             this.pictureBox1.Location = new System.Drawing.Point(535, 81);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(300, 200);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -217,11 +218,11 @@ namespace Proj_PB
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(314, 9);
+            this.label6.Location = new System.Drawing.Point(249, 18);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(255, 24);
+            this.label6.Size = new System.Drawing.Size(358, 24);
             this.label6.TabIndex = 9;
-            this.label6.Text = "Wyszukiwarka samochodu";
+            this.label6.Text = "Wyszukaj swój wymarzony samochód";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tableTableAdapter
@@ -281,7 +282,7 @@ namespace Proj_PB
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Wyszukiwarka samochodu";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carsDataSet)).EndInit();

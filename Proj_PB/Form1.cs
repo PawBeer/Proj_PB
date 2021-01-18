@@ -47,8 +47,7 @@ namespace Proj_PB
 
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-            {
-            
+            {         
             if(checkedListBox1.GetItemChecked(checkedListBox1.SelectedIndex))
             {
                 klikniete = false;
@@ -61,7 +60,6 @@ namespace Proj_PB
 
             foreach (int indexChecked in checkedListBox1.CheckedIndices)
             {
-
                 if (klikniete)
                 {
                     switch (indexChecked.ToString())

@@ -268,11 +268,11 @@ namespace Proj_PB
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(352, 9);
+            this.label6.Location = new System.Drawing.Point(331, 18);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(113, 24);
+            this.label6.Size = new System.Drawing.Size(205, 24);
             this.label6.TabIndex = 20;
-            this.label6.Text = "Tryb edycji";
+            this.label6.Text = "Edytowanie komisów";
             // 
             // button5
             // 
@@ -298,7 +298,7 @@ namespace Proj_PB
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "Tryb edycji ";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
