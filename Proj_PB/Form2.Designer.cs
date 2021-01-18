@@ -51,6 +51,7 @@ namespace Proj_PB
             this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label6 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +64,7 @@ namespace Proj_PB
             this.button1.TabIndex = 0;
             this.button1.Text = "dodaj pojazd ";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox1
             // 
@@ -71,6 +73,7 @@ namespace Proj_PB
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -87,6 +90,7 @@ namespace Proj_PB
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(90, 20);
             this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 
@@ -102,6 +106,7 @@ namespace Proj_PB
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(90, 20);
             this.textBox3.TabIndex = 5;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -109,6 +114,7 @@ namespace Proj_PB
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(90, 20);
             this.textBox4.TabIndex = 6;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label2
             // 
@@ -155,6 +161,7 @@ namespace Proj_PB
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "metalic";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -165,6 +172,7 @@ namespace Proj_PB
             this.checkBox2.TabIndex = 12;
             this.checkBox2.Text = "ABS";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
@@ -175,6 +183,7 @@ namespace Proj_PB
             this.checkBox3.TabIndex = 13;
             this.checkBox3.Text = "klimatyzacja";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox4
             // 
@@ -185,6 +194,7 @@ namespace Proj_PB
             this.checkBox4.TabIndex = 14;
             this.checkBox4.Text = "wpomaganie kierownicy";
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // dataGridView1
             // 
@@ -193,10 +203,12 @@ namespace Proj_PB
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(845, 172);
             this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.checkBox4);
@@ -225,6 +237,7 @@ namespace Proj_PB
             this.button2.TabIndex = 17;
             this.button2.Text = "usuń pojazd z bazy danych";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -249,6 +262,7 @@ namespace Proj_PB
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // label6
             // 
@@ -259,6 +273,16 @@ namespace Proj_PB
             this.label6.Size = new System.Drawing.Size(113, 24);
             this.label6.TabIndex = 20;
             this.label6.Text = "Tryb edycji";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(576, 53);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(139, 23);
+            this.button5.TabIndex = 15;
+            this.button5.Text = "załaduj zdjęcie";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form2
             // 
@@ -308,5 +332,6 @@ namespace Proj_PB
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button5;
     }
 }

@@ -25,9 +25,6 @@ namespace Proj_PB
         public string czyWspomaganie = "";
         public string tabKom = "";
         public string tab = "Table";
-
-
-
        
 
         public Form1(string nazwa)
@@ -112,22 +109,6 @@ namespace Proj_PB
             // TODO: This line of code loads data into the 'carsDataSet.Table' table. You can move, or remove it, as needed.
             // this.tableTableAdapter.Fill(this.carsDataSet.Table);
 
-            {
-                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT marka FROM [dbo].[" + tab + "] ", conn);
-                adapter.Fill(dt);
-                listBox1.DataSource = dt;
-                listBox1.DisplayMember = "marka";
-
-//                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt1 = new DataTable();
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie  FROM [dbo].[" + tab + "] ", conn);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
-            }
 
             if (UserName == "admin")
             {
@@ -174,8 +155,8 @@ namespace Proj_PB
                 SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn1);
                 adapter1.Fill(dt1);
                 dataGridView1.DataSource = dt1;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns[9].Visible = false;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -297,8 +278,8 @@ namespace Proj_PB
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tabKom = comboBox4.GetItemText(comboBox4.SelectedValue);
-
+         tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
+           
             switch(tabKom)
             {
                 case "0":
@@ -313,10 +294,28 @@ namespace Proj_PB
                     }
             };
 
-            
+            {
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt = new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT marka FROM [dbo].[" + tab + "] ", conn);
+                adapter.Fill(dt);
+                listBox1.DataSource = dt;
+                listBox1.DisplayMember = "marka";
+
+                //SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
+                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie  FROM [dbo].[" + tab + "] ", conn);
+                adapter1.Fill(dt1);
+                dataGridView1.DataSource = dt1;
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns[9].Visible = false;
+            }
 
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
