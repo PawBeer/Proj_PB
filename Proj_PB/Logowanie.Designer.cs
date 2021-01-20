@@ -67,6 +67,7 @@ namespace Proj_PB
             // 
             this.textBox2.Location = new System.Drawing.Point(96, 145);
             this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '*';
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 3;
             // 
@@ -89,7 +90,7 @@ namespace Proj_PB
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form3
+            // Logowanie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,7 +101,7 @@ namespace Proj_PB
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form3";
+            this.Name = "Logowanie";
             this.Text = "Logowanie do komisu";
             this.ResumeLayout(false);
             this.PerformLayout();

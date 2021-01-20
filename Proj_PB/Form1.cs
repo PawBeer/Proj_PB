@@ -139,6 +139,8 @@ namespace Proj_PB
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            pictureBox1.Visible = false;
+
             SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
             DataTable dt = new DataTable();
             wybModel = comboBox1.GetItemText(comboBox1.SelectedValue);
@@ -158,6 +160,8 @@ namespace Proj_PB
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            pictureBox1.Visible = false;
+
             SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
             DataTable dt = new DataTable();
             wybSilnik = comboBox2.GetItemText(comboBox2.SelectedValue);
@@ -196,6 +200,8 @@ namespace Proj_PB
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            pictureBox1.Visible = false;
+
             czyMetalic = checkBox1.Checked;
 
             SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
@@ -264,26 +270,32 @@ namespace Proj_PB
         {
             pictureBox1.Visible = true;
 
-            dataGridView1.CurrentRow.Selected = true;
-            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
+            if (e.RowIndex >= 0)
+            {
+                dataGridView1.CurrentRow.Selected = true;
+                int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
 
-            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            conn.Open();
-            SqlCommand cm = new SqlCommand("SELECT zdjecie FROM [dbo].[" + tab + "] where Id='" + id + "'", conn);
-            string img = cm.ExecuteScalar().ToString();
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                conn.Open();
+                SqlCommand cm = new SqlCommand("SELECT zdjecie FROM [dbo].[" + tab + "] where Id='" + id + "'", conn);
+                string img = cm.ExecuteScalar().ToString();
 
-            workingDirectory = Environment.CurrentDirectory;
-            projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-            ImagePath = Path.Combine(projectDirectory, "photos", img);
+                workingDirectory = Environment.CurrentDirectory;
+                projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                ImagePath = Path.Combine(projectDirectory, "photos", img);
 
-            pictureBox1.Image = Image.FromFile(ImagePath);
-            
-            conn.Close();
+                pictureBox1.Image = Image.FromFile(ImagePath);
+
+                conn.Close();
+            }
+                          
         }
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-         tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
+            pictureBox1.Visible = false;
+
+            tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
            
             switch(tabKom) 
             {
@@ -325,6 +337,7 @@ namespace Proj_PB
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+            pictureBox1.Visible = false;
             wybKolor = comboBox3.GetItemText(comboBox3.SelectedValue);
 
             SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");

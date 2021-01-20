@@ -93,96 +93,83 @@ namespace Proj_PB
                     }
             };
 
-            
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
-            SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[" + tab + "] ", conn1);
-            adapter1.Fill(dt1);
-            dataGridView1.DataSource = dt1;
-            dataGridView1.Columns["Id"].Visible = false;
-            
+            reload_DGV();
         }
+
+
+        public void reload_DGV()
+        {
+            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            SqlCommand com = new SqlCommand("SELECT * FROM [dbo].[" + tab + "]", conn);
+            DataTable dt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter(com);
+            adapter.Fill(dt);
+            adapter.Update(dt);
+            dataGridView1.DataSource = dt;
+            dataGridView1.Columns["Id"].Visible = false;
+            dataGridView1.Columns["zdjecie"].Visible = false;
+        }
+
+
 
         private void button2_Click(object sender, EventArgs e)
         {
+            /*            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                        SqlDataAdapter adapter = new SqlDataAdapter();
+                        SqlCommand command = new SqlCommand("DELETE FROM Table WHERE Id = @id", conn);
+                        parameter = command.Parameters.Add("@Id", SqlDbType.NChar, 5, "Id");
+                        parameter.SourceVersion = DataRowVersion.Original;
+
+                        adapter.DeleteCommand = command;*/
+
             SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
             conn1.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM [dbo].[" + tab + "] where Id = '" + id + "'", conn1);
+            SqlCommand command = new SqlCommand("DELETE [dbo].[" + tab + "] where Id = '" + id + "'", conn1);
             command.ExecuteNonQuery();
-
-            DataTable dt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[" + tab + "] ", conn1);
-            adapter.Fill(dt);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns["Id"].Visible = false;
-
             conn1.Close();
-            conn1.Dispose();
             MessageBox.Show("Pojazd został poprawnie usunięty z bazy");
-            
+            reload_DGV();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1.CurrentRow.Selected = true;
-            id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
+            if (e.RowIndex >= 0)
+            {
+                dataGridView1.CurrentRow.Selected = true;
+                id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
+            }
+                
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (AddMarka.Equals(""))
+            if (AddMarka.Equals("") || AddModel.Equals("") || AddSilnik.Equals("") || AddKolor.Equals(""))
             {
-                MessageBox.Show("Prosze o uzupełnienie danych w polach marka");       
+                MessageBox.Show("Proszę o uzupełnienie danych");
             }
             else
-            {
-                if (AddModel.Equals(""))
-                {
-                    MessageBox.Show("Prosze o uzupełnienie danych w polu model");
-                }
-                else
-                {
-                    if(AddSilnik.Equals(""))
-                    {
-                        MessageBox.Show("Prosze o uzupełnienie danych w polu silnik");
-                    }
-                    else
-                    {
-                        if(AddKolor.Equals(""))
-                        {
-                            MessageBox.Show("Prosze o uzupełnienie danych w polu kolor");
-                        }
-                        else
-                        {
-                            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                            SqlCommand command = new SqlCommand("INSERT INTO dbo.[" + tab + "] (marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie)" +
-                            " VALUES ('" + AddMarka + "', '" + AddModel + "', '" + AddSilnik + "', '" + AddKolor + "', '" + AddMetalic + "', '" + AddABS + "', '" + AddKlimatyzacja + "', '" + AddWspomaganie + "', '" + AddZdjecie + "')", conn1);
-                            conn1.Open();
-                            command.ExecuteNonQuery();
+            {            
+            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.[" + tab + "] (marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie)" +
+            " VALUES ('" + AddMarka + "', '" + AddModel + "', '" + AddSilnik + "', '" + AddKolor + "', '" + AddMetalic + "', '" + AddABS + "', '" + AddKlimatyzacja + "', '" + AddWspomaganie + "', '" + AddZdjecie + "')", conn1);
+            conn1.Open();
+            command.ExecuteNonQuery();
+            conn1.Close();
+            conn1.Dispose();
 
-                            DataTable dt = new DataTable();
-                            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy] FROM [dbo].[" + tab + "] ", conn1);
-                            adapter.Fill(dt);
-                            dataGridView1.DataSource = dt;
-                            dataGridView1.Columns["Id"].Visible = false;
+            MessageBox.Show("Pojazd został dodany do bazy!");
 
-                            conn1.Close();
-                            conn1.Dispose();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            checkBox1.Checked = false;
+            checkBox2.Checked = false;
+            checkBox3.Checked = false;
+            checkBox4.Checked = false;
+            AddZdjecie = "";
 
-                            MessageBox.Show("Pojazd został dodany do bazy!");
-
-                            textBox1.Clear();
-                            textBox2.Clear();
-                            textBox3.Clear();
-                            textBox4.Clear();
-                            checkBox1.Checked = false;
-                            checkBox2.Checked = false;
-                            checkBox3.Checked = false;
-                            checkBox4.Checked = false;
-                            AddZdjecie = "";
-                        }
-                    }  
-                }
+            reload_DGV();     
             }
         }
 
