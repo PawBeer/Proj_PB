@@ -53,52 +53,60 @@ namespace Proj_PB
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (checkedListBox1.SelectedIndex)
+            try
+            { 
+                switch (checkedListBox1.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            if (czyABS == "")
+                            {
+                                czyABS = " AND ABS = 'True'";
+                            }
+                            else
+                            {
+                                czyABS = "";
+                            }
+                            break;
+                        }
+                    case 1:
+                        {
+                            if (czyKlimatyzacja == "")
+                            {
+                                czyKlimatyzacja = " AND klimatyzacja = 'True'";
+                            }
+                            else
+                            {
+                                czyKlimatyzacja = "";
+                            }
+                            break;
+                        }
+                    case 2:
+                        {
+                            if (czyWspomaganie == "")
+                            {
+                                czyWspomaganie = " AND [wspomaganie kierownicy] = 'True'";
+                            }
+                            else
+                            {
+                                czyWspomaganie = "";
+                            }
+                            break;
+                        }
+                }   
+                
+            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+            DataTable dt = new DataTable();
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "'" + czyABS + czyKlimatyzacja + czyWspomaganie +")", conn);
+            adapter.Fill(dt);
+            dataGridView1.DataSource = dt;
+            
+            }
+            catch(Exception ex)
             {
-                case 0:
-                    {
-                        if (czyABS == "")
-                        {
-                            czyABS = " AND ABS = 'True'";
-                        }
-                        else
-                        {
-                            czyABS = "";
-                        }
-                        break;
-                    }
-                case 1:
-                    {
-                        if (czyKlimatyzacja == "")
-                        {
-                            czyKlimatyzacja = " AND klimatyzacja = 'True'";
-                        }
-                        else
-                        {
-                            czyKlimatyzacja = "";
-                        }
-                        break;
-                    }
-                case 2:
-                    {
-                        if (czyWspomaganie == "")
-                        {
-                            czyWspomaganie = " AND [wspomaganie kierownicy] = 'True'";
-                        }
-                        else
-                        {
-                            czyWspomaganie = "";
-                        }
-                        break;
-                    }
-            }                                        
-                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-
-                DataTable dt = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "'" + czyABS + czyKlimatyzacja + czyWspomaganie +")", conn);
-                adapter.Fill(dt);
-                dataGridView1.DataSource = dt;          
-        }
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -118,125 +126,153 @@ namespace Proj_PB
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
+            try
+            { 
+                pictureBox1.Visible = false;
 
-             SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt = new DataTable();
-            string wybMarka = listBox1.GetItemText(listBox1.SelectedValue);
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT model FROM [dbo].[" + tab + "] where [marka ]='" + wybMarka+"'", conn);
-            adapter.Fill(dt);
-            comboBox1.DataSource = dt;
-            comboBox1.DisplayMember = "model";
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt = new DataTable();
+                string wybMarka = listBox1.GetItemText(listBox1.SelectedValue);
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT model FROM [dbo].[" + tab + "] where [marka ]='" + wybMarka+"'", conn);
+                adapter.Fill(dt);
+                comboBox1.DataSource = dt;
+                comboBox1.DisplayMember = "model";
 
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
-            SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where [marka ]='" + wybMarka + "'", conn1);
-            adapter1.Fill(dt1);
-            dataGridView1.DataSource = dt1;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
-        }
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
+                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where [marka ]='" + wybMarka + "'", conn1);
+                adapter1.Fill(dt1);
+                dataGridView1.DataSource = dt1;
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns[9].Visible = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
+            try
+            { 
+                pictureBox1.Visible = false;
 
-            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt = new DataTable();
-            wybModel = comboBox1.GetItemText(comboBox1.SelectedValue);
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT silnik FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn);
-            adapter.Fill(dt);
-            comboBox2.DataSource = dt;
-            comboBox2.DisplayMember = "silnik";
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt = new DataTable();
+                wybModel = comboBox1.GetItemText(comboBox1.SelectedValue);
+                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT silnik FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn);
+                adapter.Fill(dt);
+                comboBox2.DataSource = dt;
+                comboBox2.DisplayMember = "silnik";
 
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
-            SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn1);
-            adapter1.Fill(dt1);
-            dataGridView1.DataSource = dt1;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
-        }
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
+                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where model='" + wybModel + "'", conn1);
+                adapter1.Fill(dt1);
+                dataGridView1.DataSource = dt1;
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns[9].Visible = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
+            try
+            { 
+                pictureBox1.Visible = false;
 
-            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt = new DataTable();
-            wybSilnik = comboBox2.GetItemText(comboBox2.SelectedValue);
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt = new DataTable();
+                wybSilnik = comboBox2.GetItemText(comboBox2.SelectedValue);
 
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
 
-            if (czyMetalic == false)
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND " + "silnik ='" + wybSilnik + "')", conn);
-                adapter.Fill(dt);
-                comboBox3.DataSource = dt;
-                comboBox3.DisplayMember = "kolor";
+                if (czyMetalic == false)
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND " + "silnik ='" + wybSilnik + "')", conn);
+                    adapter.Fill(dt);
+                    comboBox3.DataSource = dt;
+                    comboBox3.DisplayMember = "kolor";
                 
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
+                else
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn);
+                    adapter.Fill(dt);
+                    comboBox3.DataSource = dt;
+                    comboBox3.DisplayMember = "kolor";
+
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn);
-                adapter.Fill(dt);
-                comboBox3.DataSource = dt;
-                comboBox3.DisplayMember = "kolor";
-
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik ='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                MessageBox.Show(ex.Message, "Bug Report");
             }
 
-        }
+}
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
+            try 
+            { 
+                pictureBox1.Visible = false;
 
-            czyMetalic = checkBox1.Checked;
+                czyMetalic = checkBox1.Checked;
 
-            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt = new DataTable();
 
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
 
-            if (czyMetalic == false)
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "')", conn);
-                adapter.Fill(dt);
-                comboBox3.DataSource = dt;
-                comboBox3.DisplayMember = "kolor"; 
+                if (czyMetalic == false)
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "')", conn);
+                    adapter.Fill(dt);
+                    comboBox3.DataSource = dt;
+                    comboBox3.DisplayMember = "kolor"; 
 
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
+                else
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn);
+                    adapter.Fill(dt);
+                    comboBox3.DataSource = dt;
+                    comboBox3.DisplayMember = "kolor";
+
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT kolor FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn);
-                adapter.Fill(dt);
-                comboBox3.DataSource = dt;
-                comboBox3.DisplayMember = "kolor";
-
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                MessageBox.Show(ex.Message, "Bug Report");
             }
-        }
+}
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -268,67 +304,81 @@ namespace Proj_PB
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            pictureBox1.Visible = true;
+            try
+            { 
+                pictureBox1.Visible = true;
 
-            if (e.RowIndex >= 0)
-            {
-                dataGridView1.CurrentRow.Selected = true;
-                int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
+                if (e.RowIndex >= 0)
+                {
+                    dataGridView1.CurrentRow.Selected = true;
+                    int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].FormattedValue);
 
-                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                conn.Open();
-                SqlCommand cm = new SqlCommand("SELECT zdjecie FROM [dbo].[" + tab + "] where Id='" + id + "'", conn);
-                string img = cm.ExecuteScalar().ToString();
+                    SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                    conn.Open();
+                    SqlCommand cm = new SqlCommand("SELECT zdjecie FROM [dbo].[" + tab + "] where Id='" + id + "'", conn);
+                    string img = cm.ExecuteScalar().ToString();
 
-                workingDirectory = Environment.CurrentDirectory;
-                projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                ImagePath = Path.Combine(projectDirectory, "photos", img);
+                    workingDirectory = Environment.CurrentDirectory;
+                    projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                    ImagePath = Path.Combine(projectDirectory, "photos", img);
 
-                pictureBox1.Image = Image.FromFile(ImagePath);
+                    pictureBox1.Image = Image.FromFile(ImagePath);
 
-                conn.Close();
+                    conn.Close();
+                }
             }
-                          
-        }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+
+}
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
-
-            tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
-           
-            switch(tabKom) 
+            try
             {
-                case "0":
-                    {
-                        tab = "Table";
-                        break;
-                    }
-                case "1":
-                    {
-                        tab = "Table_1";
-                        break;
-                    }
-            };
+                pictureBox1.Visible = false;
 
-            {
-                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT marka FROM [dbo].[" + tab + "] ", conn);
-                adapter.Fill(dt);
-                listBox1.DataSource = dt;
-                listBox1.DisplayMember = "marka";
+                tabKom = comboBox4.GetItemText(comboBox4.SelectedIndex);
 
-                //SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                DataTable dt1 = new DataTable();
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie  FROM [dbo].[" + tab + "] ", conn);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                switch (tabKom)
+                {
+                    case "0":
+                        {
+                            tab = "Table";
+                            break;
+                        }
+                    case "1":
+                        {
+                            tab = "Table_1";
+                            break;
+                        }
+                };
+
+                {
+                    SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                    DataTable dt = new DataTable();
+                    SqlDataAdapter adapter = new SqlDataAdapter("SELECT DISTINCT marka FROM [dbo].[" + tab + "] ", conn);
+                    adapter.Fill(dt);
+                    listBox1.DataSource = dt;
+                    listBox1.DisplayMember = "marka";
+
+                    DataTable dt1 = new DataTable();
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie  FROM [dbo].[" + tab + "] ", conn);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
         }
+
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -337,28 +387,35 @@ namespace Proj_PB
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Visible = false;
-            wybKolor = comboBox3.GetItemText(comboBox3.SelectedValue);
+            try
+            { 
+                pictureBox1.Visible = false;
+                wybKolor = comboBox3.GetItemText(comboBox3.SelectedValue);
 
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            DataTable dt1 = new DataTable();
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                DataTable dt1 = new DataTable();
 
-            if (czyMetalic == false)
-            {
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND kolor ='" + wybKolor + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                if (czyMetalic == false)
+                {
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND kolor ='" + wybKolor + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
+                else
+                {
+                    SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND kolor ='" + wybKolor + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
+                    adapter1.Fill(dt1);
+                    dataGridView1.DataSource = dt1;
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[9].Visible = false;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                SqlDataAdapter adapter1 = new SqlDataAdapter("SELECT DISTINCT Id, marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie FROM [dbo].[" + tab + "] where (model='" + wybModel + "' AND silnik='" + wybSilnik + "' AND kolor ='" + wybKolor + "' AND metalic = '" + czyMetalic.ToString() + "')", conn1);
-                adapter1.Fill(dt1);
-                dataGridView1.DataSource = dt1;
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[9].Visible = false;
+                MessageBox.Show(ex.Message, "Bug Report");
             }
-        }
+}
     }
 }

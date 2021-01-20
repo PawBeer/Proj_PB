@@ -197,19 +197,20 @@ namespace Proj_PB
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(14, 297);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 20;
-            this.dataGridView1.Size = new System.Drawing.Size(843, 101);
+            this.dataGridView1.Size = new System.Drawing.Size(820, 101);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(535, 81);
+            this.pictureBox1.Location = new System.Drawing.Point(518, 81);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(300, 200);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -221,7 +222,7 @@ namespace Proj_PB
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.Location = new System.Drawing.Point(249, 18);
+            this.label6.Location = new System.Drawing.Point(240, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(358, 24);
             this.label6.TabIndex = 9;
@@ -253,7 +254,7 @@ namespace Proj_PB
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(750, 20);
+            this.button1.Location = new System.Drawing.Point(749, 18);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(85, 45);
             this.button1.TabIndex = 12;
@@ -263,7 +264,7 @@ namespace Proj_PB
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(750, 404);
+            this.button2.Location = new System.Drawing.Point(749, 404);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(85, 45);
             this.button2.TabIndex = 13;
@@ -275,7 +276,7 @@ namespace Proj_PB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(869, 461);
+            this.ClientSize = new System.Drawing.Size(844, 461);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);

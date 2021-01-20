@@ -77,59 +77,73 @@ namespace Proj_PB
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            tabKom = comboBox1.GetItemText(comboBox1.SelectedIndex);
+            try
+            { 
+                tabKom = comboBox1.GetItemText(comboBox1.SelectedIndex);
 
-            switch (tabKom)
+                switch (tabKom)
+                {
+                    case "0":
+                        {
+                            tab = "Table";
+                            break;
+                        }
+                    case "1":
+                        {
+                            tab = "Table_1";
+                            break;
+                        }
+                };
+
+                reload_DGV();
+            }
+            catch(Exception ex)
             {
-                case "0":
-                    {
-                        tab = "Table";
-                        break;
-                    }
-                case "1":
-                    {
-                        tab = "Table_1";
-                        break;
-                    }
-            };
-
-            reload_DGV();
-        }
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
 
         public void reload_DGV()
         {
-            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            SqlCommand com = new SqlCommand("SELECT * FROM [dbo].[" + tab + "]", conn);
-            DataTable dt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(com);
-            adapter.Fill(dt);
-            adapter.Update(dt);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns["Id"].Visible = false;
-            dataGridView1.Columns["zdjecie"].Visible = false;
-        }
+            try
+            { 
+                SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                SqlCommand com = new SqlCommand("SELECT * FROM [dbo].[" + tab + "]", conn);
+                DataTable dt = new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter(com);
+                adapter.Fill(dt);
+                adapter.Update(dt);
+                dataGridView1.DataSource = dt;
+                dataGridView1.Columns["Id"].Visible = false;
+                dataGridView1.Columns["zdjecie"].Visible = false;
+                dataGridView1.AllowUserToAddRows = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-            /*            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-                        SqlDataAdapter adapter = new SqlDataAdapter();
-                        SqlCommand command = new SqlCommand("DELETE FROM Table WHERE Id = @id", conn);
-                        parameter = command.Parameters.Add("@Id", SqlDbType.NChar, 5, "Id");
-                        parameter.SourceVersion = DataRowVersion.Original;
-
-                        adapter.DeleteCommand = command;*/
-
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            conn1.Open();
-            SqlCommand command = new SqlCommand("DELETE [dbo].[" + tab + "] where Id = '" + id + "'", conn1);
-            command.ExecuteNonQuery();
-            conn1.Close();
-            MessageBox.Show("Pojazd został poprawnie usunięty z bazy");
-            reload_DGV();
-        }
+            try 
+            { 
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                conn1.Open();
+                SqlCommand command = new SqlCommand("DELETE [dbo].[" + tab + "] where Id = '" + id + "'", conn1);
+                command.ExecuteNonQuery();
+                conn1.Close();
+                MessageBox.Show("Pojazd został poprawnie usunięty z bazy");
+                reload_DGV();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Bug Report");
+            }
+}
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -143,35 +157,42 @@ namespace Proj_PB
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (AddMarka.Equals("") || AddModel.Equals("") || AddSilnik.Equals("") || AddKolor.Equals(""))
+            try 
+            { 
+                if (AddMarka.Equals("") || AddModel.Equals("") || AddSilnik.Equals("") || AddKolor.Equals(""))
+                {
+                    MessageBox.Show("Proszę o uzupełnienie danych");
+                }
+                else
+                {            
+                SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
+                SqlCommand command = new SqlCommand("INSERT INTO dbo.[" + tab + "] (marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie)" +
+                " VALUES ('" + AddMarka + "', '" + AddModel + "', '" + AddSilnik + "', '" + AddKolor + "', '" + AddMetalic + "', '" + AddABS + "', '" + AddKlimatyzacja + "', '" + AddWspomaganie + "', '" + AddZdjecie + "')", conn1);
+                conn1.Open();
+                command.ExecuteNonQuery();
+                conn1.Close();
+                conn1.Dispose();
+
+                MessageBox.Show("Pojazd został dodany do bazy!");
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                checkBox3.Checked = false;
+                checkBox4.Checked = false;
+                AddZdjecie = "";
+
+                reload_DGV();     
+                }
+            }
+            catch(Exception ex)
             {
-                MessageBox.Show("Proszę o uzupełnienie danych");
+                MessageBox.Show(ex.Message, "Bug Report");
             }
-            else
-            {            
-            SqlConnection conn1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\cars.mdf;Integrated Security=True");
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.[" + tab + "] (marka, model, silnik, kolor, metalic, ABS, klimatyzacja, [wspomaganie kierownicy], zdjecie)" +
-            " VALUES ('" + AddMarka + "', '" + AddModel + "', '" + AddSilnik + "', '" + AddKolor + "', '" + AddMetalic + "', '" + AddABS + "', '" + AddKlimatyzacja + "', '" + AddWspomaganie + "', '" + AddZdjecie + "')", conn1);
-            conn1.Open();
-            command.ExecuteNonQuery();
-            conn1.Close();
-            conn1.Dispose();
-
-            MessageBox.Show("Pojazd został dodany do bazy!");
-
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            checkBox1.Checked = false;
-            checkBox2.Checked = false;
-            checkBox3.Checked = false;
-            checkBox4.Checked = false;
-            AddZdjecie = "";
-
-            reload_DGV();     
-            }
-        }
+}
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
